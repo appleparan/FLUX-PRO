@@ -1,0 +1,407 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>FLUXPRO_View &mdash; FLUX PRO v0.1.1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FLUX PRO v0.1.1 documentation" href="index.html" />
+    <link rel="up" title="﻿Module structure" href="sourcecode.html" />
+    <link rel="next" title="﻿ChangeLog" href="changelog.html" />
+    <link rel="prev" title="FLUXPRO_Plot" href="FLUXPRO_Plot.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="changelog.html" title="﻿ChangeLog"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="FLUXPRO_Plot.html" title="FLUXPRO_Plot"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">FLUX PRO v0.1.1 documentation</a> &raquo;</li>
+          <li><a href="sourcecode.html" accesskey="U">﻿Module structure</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="fluxpro-view">
+<h1><tt class="xref py py-mod docutils literal"><span class="pre">FLUXPRO_View</span></tt><a class="headerlink" href="#fluxpro-view" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="EVT_RESULT">
+<tt class="descname">EVT_RESULT</tt><big>(</big><em>win</em>, <em>func</em><big>)</big><a class="headerlink" href="#EVT_RESULT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="ResultEvent">
+<em class="property">class </em><tt class="descname">ResultEvent</tt><big>(</big><em>Thread</em><big>)</big><a class="headerlink" href="#ResultEvent" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="ResultEvent.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>self</em>, <em>notify_window</em><big>)</big><a class="headerlink" href="#ResultEvent.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Compute_FLUXPRO">
+<em class="property">class </em><tt class="descname">Compute_FLUXPRO</tt><big>(</big><em>Thread</em><big>)</big><a class="headerlink" href="#Compute_FLUXPRO" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Compute_FLUXPRO.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>self</em>, <em>notify_window</em><big>)</big><a class="headerlink" href="#Compute_FLUXPRO.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Compute_FLUXPRO.run_FLUX">
+<tt class="descname">run_FLUX</tt><big>(</big><em>self</em>, <em>input_cr5000_path</em>, <em>input_cr23x_path</em>, <em>input_L2_1_path</em>, <em>input_L2_2_path</em>, <em>output_dir_path</em>, <em>button_run</em><big>)</big><a class="headerlink" href="#Compute_FLUXPRO.run_FLUX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Compute_FLUXPRO.abort">
+<tt class="descname">abort</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#Compute_FLUXPRO.abort" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Plot_FLUXPRO">
+<em class="property">class </em><tt class="descname">Plot_FLUXPRO</tt><big>(</big><em>Thread</em><big>)</big><a class="headerlink" href="#Plot_FLUXPRO" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Plot_FLUXPRO.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>self</em>, <em>notify_window</em><big>)</big><a class="headerlink" href="#Plot_FLUXPRO.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Plot_FLUXPRO.plot_FLUX">
+<tt class="descname">plot_FLUX</tt><big>(</big><em>self</em>, <em>output_dir_path</em>, <em>button_plot</em><big>)</big><a class="headerlink" href="#Plot_FLUXPRO.plot_FLUX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Plot_FLUXPRO.abort">
+<tt class="descname">abort</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#Plot_FLUXPRO.abort" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Input_panel">
+<em class="property">class </em><tt class="descname">Input_panel</tt><big>(</big><em>wx.Panel</em><big>)</big><a class="headerlink" href="#Input_panel" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Input_panel.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>self</em>, <em>parent</em>, <em>textctrl_log</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#Input_panel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Input_panel.OnRun">
+<tt class="descname">OnRun</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#Input_panel.OnRun" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Input_panel.OnCancel">
+<tt class="descname">OnCancel</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#Input_panel.OnCancel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Input_panel.OnOpen">
+<tt class="descname">OnOpen</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#Input_panel.OnOpen" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Input_panel.OnPlot">
+<tt class="descname">OnPlot</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#Input_panel.OnPlot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">OnCancel</tt><big>(</big><em>self</em>, <em>event</em><big>)</big></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Input_panel.OpenDirDlg_OUTPUT">
+<tt class="descname">OpenDirDlg_OUTPUT</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#Input_panel.OpenDirDlg_OUTPUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Input_notebook">
+<em class="property">class </em><tt class="descname">Input_notebook</tt><big>(</big><em>wx.Notebook</em><big>)</big><a class="headerlink" href="#Input_notebook" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Input_notebook.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>self</em>, <em>parent</em><big>)</big><a class="headerlink" href="#Input_notebook.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Page_L0L1">
+<em class="property">class </em><tt class="descname">Page_L0L1</tt><big>(</big><em>wx.Panel</em><big>)</big><a class="headerlink" href="#Page_L0L1" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Page_L0L1.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>self</em>, <em>parent</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#Page_L0L1.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Page_L0L1.OpenDirDlg_CR5000">
+<tt class="descname">OpenDirDlg_CR5000</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#Page_L0L1.OpenDirDlg_CR5000" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Page_L0L1.OpenDirDlg_CR23x">
+<tt class="descname">OpenDirDlg_CR23x</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#Page_L0L1.OpenDirDlg_CR23x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Page_L2">
+<em class="property">class </em><tt class="descname">Page_L2</tt><big>(</big><em>wx.Panel</em><big>)</big><a class="headerlink" href="#Page_L2" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Page_L2.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>self</em>, <em>parent</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#Page_L2.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Page_L2.OpenDirDlg_L2_1">
+<tt class="descname">OpenDirDlg_L2_1</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#Page_L2.OpenDirDlg_L2_1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Page_L2.OpenDirDlg_L2_2">
+<tt class="descname">OpenDirDlg_L2_2</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#Page_L2.OpenDirDlg_L2_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Output_panel">
+<em class="property">class </em><tt class="descname">Output_panel</tt><big>(</big><em>wx.Panel</em><big>)</big><a class="headerlink" href="#Output_panel" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Output_panel.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>self</em>, <em>parent</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#Output_panel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Output_panel.OnSize">
+<tt class="descname">OnSize</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#Output_panel.OnSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="MainFrame">
+<em class="property">class </em><tt class="descname">MainFrame</tt><big>(</big><em>wx.Panel</em><big>)</big><a class="headerlink" href="#MainFrame" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="MainFrame.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>self</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#MainFrame.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="MainFrame.OnSize">
+<tt class="descname">OnSize</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#MainFrame.OnSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="MainFrame.OnOption">
+<tt class="descname">OnOption</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#MainFrame.OnOption" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="MainFrame.OnReadme">
+<tt class="descname">OnReadme</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#MainFrame.OnReadme" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="MainFrame.OnManual">
+<tt class="descname">OnManual</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#MainFrame.OnManual" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="MainFrame.OnAboutBox">
+<tt class="descname">OnAboutBox</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#MainFrame.OnAboutBox" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="MainFrame.OnExit">
+<tt class="descname">OnExit</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#MainFrame.OnExit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ReadmeFrame">
+<em class="property">class </em><tt class="descname">ReadmeFrame</tt><big>(</big><em>wx.MiniFrame</em><big>)</big><a class="headerlink" href="#ReadmeFrame" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="ReadmeFrame.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>self</em>, <em>parent=None</em>, <em>id = -1</em>, <em>title = 'README'</em><big>)</big><a class="headerlink" href="#ReadmeFrame.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ReadmeFrame.OnCloseWindow">
+<tt class="descname">OnCloseWindow</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#ReadmeFrame.OnCloseWindow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="OptionFrame">
+<em class="property">class </em><tt class="descname">OptionFrame</tt><big>(</big><em>wx.MiniFrame</em><big>)</big><a class="headerlink" href="#OptionFrame" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="OptionFrame.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>self</em>, <em>parent=None</em>, <em>id = -1</em>, <em>title = 'Option'</em><big>)</big><a class="headerlink" href="#OptionFrame.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="OptionFrame.OnOK">
+<tt class="descname">OnOK</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#OptionFrame.OnOK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="OptionFrame.OnDefault">
+<tt class="descname">OnDefault</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#OptionFrame.OnDefault" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="OptionFrame.OnCancel">
+<tt class="descname">OnCancel</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#OptionFrame.OnCancel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="OptionFrame.OnCal">
+<tt class="descname">OnCal</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#OptionFrame.OnCal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="OptionFrame.OnRadioSetRotation">
+<tt class="descname">OnRadioSetRotation</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#OptionFrame.OnRadioSetRotation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="OptionFrame.OnRadioAGC">
+<tt class="descname">OnRadioAGC</tt><big>(</big><em>self</em>, <em>event</em><big>)</big><a class="headerlink" href="#OptionFrame.OnRadioAGC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="RedirectText">
+<em class="property">class </em><tt class="descname">RedirectText</tt><a class="headerlink" href="#RedirectText" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="RedirectText.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>self</em>, <em>LogTextCtrl</em><big>)</big><a class="headerlink" href="#RedirectText.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="RedirectText.__write__">
+<tt class="descname">__write__</tt><big>(</big><em>self</em>, <em>string</em><big>)</big><a class="headerlink" href="#RedirectText.__write__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="RedirectText.write">
+<tt class="descname">write</tt><big>(</big><em>self</em>, <em>string</em><big>)</big><a class="headerlink" href="#RedirectText.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="AboutDialogBox">
+<em class="property">class </em><tt class="descname">AboutDialogBox</tt><big>(</big><em>wx.Frame</em><big>)</big><a class="headerlink" href="#AboutDialogBox" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="AboutDialogBox.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>self</em>, <em>parent</em>, <em>id</em>, <em>title</em><big>)</big><a class="headerlink" href="#AboutDialogBox.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="MainApp">
+<em class="property">class </em><tt class="descname">MainApp</tt><big>(</big><em>wx.App</em><big>)</big><a class="headerlink" href="#MainApp" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="MainApp.OnInit">
+<tt class="descname">OnInit</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#MainApp.OnInit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="FLUXPRO_Plot.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">FLUXPRO_Plot</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="changelog.html"
+                        title="next chapter">﻿ChangeLog</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/FLUXPRO_View.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="changelog.html" title="﻿ChangeLog"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="FLUXPRO_Plot.html" title="FLUXPRO_Plot"
+             >previous</a> |</li>
+        <li><a href="index.html">FLUX PRO v0.1.1 documentation</a> &raquo;</li>
+          <li><a href="sourcecode.html" >﻿Module structure</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, Jong su, Kim.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.5.
+    </div>
+  </body>
+</html>

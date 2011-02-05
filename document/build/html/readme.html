@@ -1,0 +1,266 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>README &mdash; FLUX PRO v0.1.1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FLUX PRO v0.1.1 documentation" href="index.html" />
+    <link rel="next" title="﻿Module structure" href="sourcecode.html" />
+    <link rel="prev" title="﻿Manual" href="manual.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="sourcecode.html" title="﻿Module structure"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="manual.html" title="﻿Manual"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">FLUX PRO v0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="readme">
+<span id="rst-primer"></span><h1>README<a class="headerlink" href="#readme" title="Permalink to this headline">¶</a></h1>
+<p>This program is designed to process eddy flux data including coordinate rotation, air density correction, spike detection, and gap-filling, and programmed by the Biometeorology Lab., Dep. of Atmos. Sci. at Yonsei University and Jinkyu Hong.</p>
+<p>Source codes are available on src folder located in program&#8217;s directory.</p>
+<p>Contact Information</p>
+<ul class="simple">
+<li>Orginal Code : <a class="reference external" href="mailto:jkhong&#37;&#52;&#48;yonsei&#46;ac&#46;kr">jkhong<span>&#64;</span>yonsei<span>&#46;</span>ac<span>&#46;</span>kr</a> / <a class="reference external" href="mailto:jinkyu&#46;hong&#37;&#52;&#48;gmail&#46;com">jinkyu<span>&#46;</span>hong<span>&#64;</span>gmail<span>&#46;</span>com</a></li>
+<li>Python Code : <a class="reference external" href="mailto:jongsukim8&#37;&#52;&#48;gmail&#46;com">jongsukim8<span>&#64;</span>gmail<span>&#46;</span>com</a></li>
+</ul>
+<div class="section" id="program-record">
+<h2>Program Record:<a class="headerlink" href="#program-record" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="21%" />
+<col width="62%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Date</th>
+<th class="head">Programmer</th>
+<th class="head">Description of change</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Feb/28/2002</td>
+<td>Jinkyu Hong</td>
+<td>Original Code</td>
+</tr>
+<tr><td>Mar/09/2002</td>
+<td>Jinkyu Hong</td>
+<td>Add WPL correction</td>
+</tr>
+<tr><td>Mar/14/2002</td>
+<td>Jinkyu Hong</td>
+<td>Add quality control</td>
+</tr>
+<tr><td>Mar/21/2002</td>
+<td>Jinkyu Hong</td>
+<td>Add the calculation of conductances</td>
+</tr>
+<tr><td>Aug/17/2005</td>
+<td>Jinkyu Hong</td>
+<td>Modification of WPL and PF rotation routines</td>
+</tr>
+<tr><td>Dec/23/2008</td>
+<td>Jinkyu Hong</td>
+<td>Update for new data/modify for pgf compiler</td>
+</tr>
+<tr><td>Jan/07/2009</td>
+<td>Jinkyu Hong</td>
+<td>Update for handling bad data points</td>
+</tr>
+<tr><td>Jan/13/2009</td>
+<td>Jinkyu Hong</td>
+<td>Modification for a new data logger (CR23X)</td>
+</tr>
+<tr><td>Oct/1/2009</td>
+<td>Jong su, Kim</td>
+<td>Porting to Python</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="condition-of-use">
+<h2>CONDITION OF USE<a class="headerlink" href="#condition-of-use" title="Permalink to this headline">¶</a></h2>
+<p>This program is only for scientific research purpose and is originally written with FORTRAN and MATLAB codes.  It has been ported with Python code for a better and convenient use in window application. Accept the conditions below to use the program.</p>
+<ol class="arabic simple">
+<li>This program should be used only for research applications.</li>
+<li>This program has been developed for eddy flux calculation by Biometeorology Lab., Dep. of Atmos. Sci. at Yonsei University and no warranty is given as to its suitability for any other purpose and applications.</li>
+<li>The Biometeorology Lab. and the programmer, Jinkyu Hong cannot guarantee that the program will correctly work in all circumstances, and will not accept any liability whatsoever for any error or omission in the program</li>
+<li>The Biometeorology Lab. and Jinkyu Hong retain the proprietary rights and copyright of the program</li>
+<li>Suitable acknowledgement for the Biometeorology Lab. and Jinkyu Hong is required for any published work using the program.</li>
+<li>You can share the program with other persons and groups without a permission of the Biometeorology Lab., Dep. of Atmos. Sci. at Yonsei University, only when you accept the terms of conditions above.</li>
+</ol>
+</div>
+<div class="section" id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Hong, J. and J. Kim, 2002, On processing raw data from micrometeorological field experiments, Korean J. Agric. For. Meteorolo... 4, 119-126</li>
+<li>Foken, T. and B. wichura, 1996, Tools for quality assessement of surface-based flux measurements, Boundary-Layer Meteorology, 78. 83-105</li>
+<li>Webb, E. K., G. I. Pearman, R. Leuning, 1980, Correction of flux measurements for density effects due to heat and water vapor transfer, Quart. J. Met. Soc., 106, 85-100</li>
+<li>Wilczak, J. M, S. P. Oncley, S. A. Stage, 2001, Sonic anemometer tilt correction algorithms, Boundary-Layer Meteorology, 99, 127-150</li>
+</ul>
+</div>
+<div class="section" id="description-of-variables">
+<h2>Description of Variables<a class="headerlink" href="#description-of-variables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>nt = total number of lines to be processed</li>
+<li>num_var_($Machine Name) = total number of variables (column) to be processed</li>
+<li>um[3] = mean wind speed</li>
+<li>su[4] = standard deviation of wind speed and temperature</li>
+<li>xcov[4][3] = covariances</li>
+<li>Ta = Air temperature</li>
+<li>ea = Water vapor pressure</li>
+<li>co2 = CO2 density (mg/m3)</li>
+<li>net_radiation = net radiation(W/m2)</li>
+<li>rflx[0] = downward shortwave radiation (W/m2)</li>
+<li>rflx[1] = upward shortwave radiation (W/m2)</li>
+<li>rflx[2] = downward longwave radiation (W/m2)</li>
+<li>rflx[3] = upward longwave radiation (W/m2)</li>
+<li>g = soil heat flux (W/m2)</li>
+<li>prec = precipitation rate (mm)</li>
+<li>pa = atmospheric pressure (kPa)</li>
+<li>vdf = vapor pressure deficit (Pa)</li>
+<li>ga = aerodynamic conductance (m/s)</li>
+<li>gc = surface conductance (m/s)</li>
+<li>gc = surface conductance (m/s)</li>
+<li>gi = climatologicl conductance (m/s)</li>
+<li>gr = radiative conductance (m/s)</li>
+</ul>
+</div>
+<div class="section" id="development-environment">
+<h2>Development Environment<a class="headerlink" href="#development-environment" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Developed under 32bit environment</li>
+<li>Python &gt;= 2.6.6</li>
+<li>numpy &gt;= 1.5.0</li>
+<li>scipy &gt;= 0.8.0</li>
+<li>wxPython &gt;= 2.8.11.0(32bit, Unicode)</li>
+<li>matplotlib &gt;= 1.0.0</li>
+<li>sphinx &gt;= 1.0.4</li>
+</ul>
+</div>
+<div class="section" id="output-file">
+<h2>Output File<a class="headerlink" href="#output-file" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>ResultL0.csv : Result of L0</li>
+<li>ResultL1.csv : Result of L1</li>
+<li>ResultL2.csv : Result of L2</li>
+<li>ValueError.log : Warning;data skip due to spike</li>
+<li>Plot_L2_1.csv : Need for plotting(TC, PV value included)</li>
+<li>Plot_L2_2.csv : Need for plotting(do not need to care about it)</li>
+<li>plotimg      : plot file</li>
+</ul>
+</div>
+<div class="section" id="output-header">
+<h2>Output Header<a class="headerlink" href="#output-header" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>L0 Header <a class="reference download internal" href="_downloads/Header_L0.csv"><tt class="xref download docutils literal"><span class="pre">Header_L0.csv</span></tt></a></li>
+<li>L1 Header <a class="reference download internal" href="_downloads/Header_L1.csv"><tt class="xref download docutils literal"><span class="pre">Header_L1.csv</span></tt></a></li>
+<li>L2 Header <a class="reference download internal" href="_downloads/Header_L2.csv"><tt class="xref download docutils literal"><span class="pre">Header_L2.csv</span></tt></a></li>
+<li>Plot_L2_1 Header <a class="reference download internal" href="_downloads/Header_PLOT_L2_1.csv"><tt class="xref download docutils literal"><span class="pre">Header_PlotL2.csv</span></tt></a></li>
+<li>Plot_L2_2 Header <a class="reference download internal" href="_downloads/Header_PLOT_L2_2.csv"><tt class="xref download docutils literal"><span class="pre">Header_PlotL2.csv</span></tt></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">README</a><ul>
+<li><a class="reference internal" href="#program-record">Program Record:</a></li>
+<li><a class="reference internal" href="#condition-of-use">CONDITION OF USE</a></li>
+<li><a class="reference internal" href="#reference">Reference</a></li>
+<li><a class="reference internal" href="#description-of-variables">Description of Variables</a></li>
+<li><a class="reference internal" href="#development-environment">Development Environment</a></li>
+<li><a class="reference internal" href="#output-file">Output File</a></li>
+<li><a class="reference internal" href="#output-header">Output Header</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="manual.html"
+                        title="previous chapter">﻿Manual</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sourcecode.html"
+                        title="next chapter">﻿Module structure</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/readme.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="sourcecode.html" title="﻿Module structure"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="manual.html" title="﻿Manual"
+             >previous</a> |</li>
+        <li><a href="index.html">FLUX PRO v0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, Jong su, Kim.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.5.
+    </div>
+  </body>
+</html>
