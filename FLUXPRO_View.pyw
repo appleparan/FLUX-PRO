@@ -510,7 +510,8 @@ class Page_L1(wx.Panel):
 		self.parent = parent
 	
 		self.L1_Text = '''
-\n You must have 'ResultL0.csv' \n in your output folder to execute L1
+\n L1 will not be executed without "ResoultsL0.csv" file. \n Make sure you have the file in your folder. 
+
 '''
 		
 		self.L1_Label = wx.StaticText(self, -1, self.L1_Text, style=wx.ALIGN_CENTER)
