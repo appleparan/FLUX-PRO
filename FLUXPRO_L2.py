@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 #--------------------------------------------------------------------------
 #                    Program for processing flux data
 #
@@ -656,10 +656,13 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 
 		if(ks < 6):
 			
-			Rref.append(Rref[jj])
-			RE_limit.append(RE_limit[jj])
+#			Rref.append(Rref[jj])
+#			RE_limit.append(RE_limit[jj])
 			
-			if(E0_const == True):
+			Rref.append(Rref[-1])
+			RE_limit.append(RE_limit[-1])
+			
+			if(E0_const != True):
 				stdev_E0.append(stdev_E0[jj])
 				
 			jj = jj + 1
@@ -728,7 +731,7 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 				if((isnan(Fsc[j])    	==  True) or \
 					((Fsc[j]-yfit)		<   RE_limit[ks-1]) or \
 					((Fsc[j]-yfit)  	>   1.0 * RE_limit[ks-1]) or \
-					(iustar(j)      	==  1)):
+					(iustar[j]      	==  1)):
 					nsp2[ks-1] = nsp2[ks-1] + 1
 					Fc_filled[j] = yfit
 					RE[j] = Fc_filled[j]
