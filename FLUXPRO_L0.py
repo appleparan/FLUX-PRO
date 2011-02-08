@@ -15,6 +15,7 @@ class L0:
 	def __init__(self):
 
 		#averaging time as minutes
+		
 		self.a_time = 30
 		#leap? number of days in one year
 		self.num_day = 366
