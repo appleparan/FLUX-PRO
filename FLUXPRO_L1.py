@@ -118,8 +118,8 @@ def L1(output_path, st_agc_condition, thrsh, zm):
 	rsdn_limit = 1.0  # Rdsn for night-daytime separation
 	avgtime = 30      # averaging time (minutes)
 	num_day = 28         # date processing period as the # of days (28 -> 28 days)
-	#num_point_per_day = 48          # number of data points per day (48 -> 30 min avg time)
-	num_point_per_day = 24          # number of data points per day (24 -> 1hour avg time)
+	num_point_per_day = 48          # number of data points per day (48 -> 30 min avg time)
+	#num_point_per_day = 24          # number of data points per day (24 -> 1hour avg time)
 	
 	#determine num_point_per_day automatically . using datetime module
 	#
@@ -144,7 +144,7 @@ def L1(output_path, st_agc_condition, thrsh, zm):
 	lower_Fc = -3.0   # lower limit of daytime CO2 flux (mg/m2/s)
 	lower_LE = -200    # lower limit of LE (W/m2)
 	lower_H = -300     # lower limit of H (W/m2)
-	upper_Fc = 1   # upper limit of nighttime CO2 flux (mg/m2/s)
+	upper_Fc = 3   # upper limit of nighttime CO2 flux (mg/m2/s)
 	upper_LE = 800    # upper limit of LE (W/m2)
 	upper_H = 800     # upper limit of H (W/m2)
 	upper_agc = 95.0  # upper limit of AGC value
@@ -266,12 +266,12 @@ def L1(output_path, st_agc_condition, thrsh, zm):
 	#--------------------------------------------------------------------------
 
 	itime=np.ones(n)     # time index (1--> day 0--> night)
-	#for i in range(n):
-	#	if((rsdn[i] < rsdn_limit) and ((((i+1) % num_point_per_day) < 16) or (((i+1) % num_point_per_day) > 34))):# nighttime condition
-	#		itime[i] = 0
 	for i in range(n):
-		if((rsdn[i] < rsdn_limit) and ((((i+1) % num_point_per_day) < 8) or (((i+1) % num_point_per_day) > 17))):# nighttime condition
+		if((rsdn[i] < rsdn_limit) and ((((i+1) % num_point_per_day) < 16) or (((i+1) % num_point_per_day) > 34))):# nighttime condition
 			itime[i] = 0
+	#for i in range(n):
+	#	if((rsdn[i] < rsdn_limit) and ((((i+1) % num_point_per_day) < 8) or (((i+1) % num_point_per_day) > 17))):# nighttime condition
+	#		itime[i] = 0
 
 	#--------------------------------------------------------------------------
 	num_segment = num_point_per_day * num_day

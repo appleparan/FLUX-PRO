@@ -152,7 +152,7 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 	#--------------------------------------------------------------------------
 	# nday = 28        				# date processing period: Modify at "L1.m"
 	num_day = 28
-	num_point_per_day = 48          # number of data points per day (48 -> 30 min avg time)
+	num_point_per_day = 24          # number of data points per day (48 -> 30 min avg time)
 	num_segment = num_point_per_day * num_day
 	num_avg = int(n_L1 / num_segment)
 	num_day_2 = 7
@@ -183,6 +183,20 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 	dvpd = 5.0     # 5 hPa
 	rv = 461.51
 	#--------------------------------------------------------------------------
+	
+	upper_co2 = 1000.0 # upper limit of CO2 concent.(mg/m3)
+	upper_h2o = 60.0  # upper limit of H2O concent. (g/m3)
+	upper_Ta = 60.0   # upper limit of air temperature (oC)
+	lower_Fc = -3.0   # lower limit of daytime CO2 flux (mg/m2/s)
+	lower_LE = -200    # lower limit of LE (W/m2)
+	lower_H = -300     # lower limit of H (W/m2)
+	upper_Fc = 3   # upper limit of nighttime CO2 flux (mg/m2/s)
+	upper_LE = 800    # upper limit of LE (W/m2)
+	upper_H = 800     # upper limit of H (W/m2)
+	upper_agc = 95.0  # upper limit of AGC value
+	ustar_limit = 0.03 # minimum ustar for filtering out nighttime fluxes
+	Fc_limit = 0.005  # lower limit of Re (ecosystem respiration) (mg/m2/s)
+	gap_limit = 0.025 # 0.025 --> 95# confidence interval
 
 	Tak = npzeros(len(Ta))
 	tr = npzeros(len(Ta))
