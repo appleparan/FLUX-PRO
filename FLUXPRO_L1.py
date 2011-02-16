@@ -118,7 +118,12 @@ def L1(output_path, st_agc_condition, thrsh, zm):
 	rsdn_limit = 1.0  # Rdsn for night-daytime separation
 	avgtime = 30      # averaging time (minutes)
 	num_day = 28         # date processing period as the # of days (28 -> 28 days)
-	num_point_per_day = 48          # number of data points per day (48 -> 30 min avg time)
+	#num_point_per_day = 48          # number of data points per day (48 -> 30 min avg time)
+	num_point_per_day = 24          # number of data points per day (24 -> 1hour avg time)
+	
+	#determine num_point_per_day automatically . using datetime module
+	#
+	#
 
 	#upper_co2 = 850.0 # upper limit of CO2 concent.(mg/m3)
 	#upper_h2o = 45.0  # upper limit of H2O concent. (g/m3)
@@ -261,8 +266,11 @@ def L1(output_path, st_agc_condition, thrsh, zm):
 	#--------------------------------------------------------------------------
 
 	itime=np.ones(n)     # time index (1--> day 0--> night)
+	#for i in range(n):
+	#	if((rsdn[i] < rsdn_limit) and ((((i+1) % num_point_per_day) < 16) or (((i+1) % num_point_per_day) > 34))):# nighttime condition
+	#		itime[i] = 0
 	for i in range(n):
-		if((rsdn[i] < rsdn_limit) and ((((i+1) % 48) < 16) or (((i+1) % 48) > 34))):# nighttime condition
+		if((rsdn[i] < rsdn_limit) and ((((i+1) % num_point_per_day) < 8) or (((i+1) % num_point_per_day) > 17))):# nighttime condition
 			itime[i] = 0
 
 	#--------------------------------------------------------------------------
