@@ -16,9 +16,7 @@ from math import *
 import numpy as np
 import scipy as sp
 import scipy.stats as   spstats
-import copy
-import os
-import csv
+import copy, os, csv, datetime
 from cStringIO import StringIO
 #import FLUX_PRO_Common as Common
 
@@ -116,15 +114,18 @@ def L1(output_path, st_agc_condition, thrsh, zm):
 	#Determined from option window
 	#zm = 20           # measurement height
 	rsdn_limit = 1.0  # Rdsn for night-daytime separation
-	avgtime = 30      # averaging time (minutes)
+	#avgtime = 30      # averaging time (minutes)
 	num_day = 28         # date processing period as the # of days (28 -> 28 days)
-	num_point_per_day = 48          # number of data points per day (48 -> 30 min avg time)
+	#num_point_per_day = 48          # number of data points per day (48 -> 30 min avg time)
 	#num_point_per_day = 24          # number of data points per day (24 -> 1hour avg time)
 	
 	#determine num_point_per_day automatically . using datetime module
-	#
-	#
-
+	date_1st = datetime.datetime.strptime(date[0], "%Y-%m-%d %H:%M")
+	date_2nd = datetime.datetime.strptime(date[1], "%Y-%m-%d %H:%M")
+	date_diff = date_2nd - date_1st
+	avgtime = int(date_diff.seconds / 60) # averaging time (minutes)
+	num_point_per_day = 1440 / avgtime # number of data points per day (1440 : minutes of a day)
+	
 	#upper_co2 = 850.0 # upper limit of CO2 concent.(mg/m3)
 	#upper_h2o = 45.0  # upper limit of H2O concent. (g/m3)
 	#upper_Ta = 40.0   # upper limit of air temperature (oC)
@@ -267,12 +268,14 @@ def L1(output_path, st_agc_condition, thrsh, zm):
 
 	itime=np.ones(n)     # time index (1--> day 0--> night)
 	for i in range(n):
-		if((rsdn[i] < rsdn_limit) and ((((i+1) % num_point_per_day) < 16) or (((i+1) % num_point_per_day) > 34))):# nighttime condition
+		date_obj = datetime.datetime.strptime(date[i], "%Y-%m-%d %H:%M")
+		#during 17:00~7:00, itime is 0(night)
+		if((rsdn[i] < rsdn_limit) and ((date_obj.hour < 8) or (date_obj.hour >= 17))):# nighttime condition
 			itime[i] = 0
-	#for i in range(n):
-	#	if((rsdn[i] < rsdn_limit) and ((((i+1) % num_point_per_day) < 8) or (((i+1) % num_point_per_day) > 17))):# nighttime condition
-	#		itime[i] = 0
-
+		#if time is 7:30, itime = 1
+		if((rsdn[i] < rsdn_limit) and ((date_obj.hour == 7) and (date_obj.minute != 0))):
+			itime[i] = 1
+	
 	#--------------------------------------------------------------------------
 	num_segment = num_point_per_day * num_day
 	num_avg = int(n / num_segment)
