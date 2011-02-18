@@ -13,7 +13,7 @@
 #	 Oct/31/2010	 Jong su, Kim	 	Porting MATLAB program to Python
 #   
 
-import os, csv, copy
+import os, csv, copy, datetime
 from numpy 	import 	zeros 	as npzeros, \
 					array 	as nparray, \
 					mean 	as npmean, \
@@ -150,9 +150,15 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 		i = i + 1
 	# Define constants and parameters for gap filling
 	#--------------------------------------------------------------------------
-	# nday = 28        				# date processing period: Modify at "L1.m"
 	num_day = 28
-	num_point_per_day = 24          # number of data points per day (48 -> 30 min avg time)
+	#num_point_per_day = 24          # number of data points per day (48 -> 30 min avg time)
+	#avgtime = 30
+	#determine num_point_per_day automatically . using datetime module
+	date_1st = datetime.datetime.strptime(date[0], "%Y-%m-%d %H:%M")
+	date_2nd = datetime.datetime.strptime(date[1], "%Y-%m-%d %H:%M")
+	date_diff = date_2nd - date_1st
+	avgtime = int(date_diff.seconds / 60) # averaging time (minutes)
+	num_point_per_day = 1440 / avgtime # number of data points per day (1440 : minutes of a day)
 	num_segment = num_point_per_day * num_day
 	num_avg = int(n_L1 / num_segment)
 	num_day_2 = 7
@@ -160,7 +166,7 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 	# noverlap = 5
 	num_day_re = 20
 	noverlap = 5
-	avgtime = 30
+	
 
 	#--------------------------------------------------------------------------
 	#E0_const = True # Do you want to use constant E0 for one year? Y/N
