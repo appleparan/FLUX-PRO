@@ -151,6 +151,10 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 	# Define constants and parameters for gap filling
 	#--------------------------------------------------------------------------
 	num_day = 28
+	ni = 36
+	nd = 10
+	n1 = 2         	# how many the largest points are considered for respiration
+					# DO NOT Modify!
 	#num_point_per_day = 24          # number of data points per day (48 -> 30 min avg time)
 	#avgtime = 30
 	#determine num_point_per_day automatically . using datetime module
@@ -158,6 +162,7 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 	date_2nd = datetime.datetime.strptime(date[1], "%Y-%m-%d %H:%M")
 	date_diff = date_2nd - date_1st
 	avgtime = int(date_diff.seconds / 60) # averaging time (minutes)
+	
 	num_point_per_day = 1440 / avgtime # number of data points per day (1440 : minutes of a day)
 	num_segment = num_point_per_day * num_day
 	num_avg = int(n_L1 / num_segment)
@@ -167,14 +172,13 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 	num_day_re = 20
 	noverlap = 5
 	
-
+	ni = int(num_point_per_day * 3 / 4) # the data point that night starts
+	nd = 300 / avgtime 					# how many the largest points are considered for respiration (300 : minitues of 5 hours)
+	
 	#--------------------------------------------------------------------------
 	#E0_const = True # Do you want to use constant E0 for one year? Y/N
 
-	ni = 36
-	nd = 10
-	n1 = 2         # how many the largest points are considered for respiration
-					# DO NOT Modify!
+	
 	beta0 = nparray([2, 200])
 	Tref = 10.0
 	T0 = -46.02
