@@ -12,9 +12,8 @@
 #	 Oct/31/2010	 Jong su, Kim 		Porting MATLAB program to Python
 #--------------------------------------------------------------------------
 
-from math import *
+from math import isnan, fabs
 import numpy as np
-import scipy as sp
 import scipy.stats as   spstats
 import copy, os, csv, datetime
 from cStringIO import StringIO
@@ -54,10 +53,6 @@ def L1(output_path, st_agc_condition, thrsh, zm):
 	except IOError:
 		print "IO errorCheck the output File: ", output_file_path
 		return 'L1 failed'
-	except Error:
-		print "Unexpected Open Error: ", output_file_path
-		output_fp.close()
-		return 'L1 failed'    
 		
 	n = 0
 	L1_total = []
@@ -78,7 +73,7 @@ def L1(output_path, st_agc_condition, thrsh, zm):
 	Hsc = np.zeros(n)
 	agc = np.zeros(n)
 	rsdn = np.zeros(n)
-	net_rad = np.zeros(n)
+#	net_rad = np.zeros(n)
 	Ta = np.zeros(n)
 	h2o = np.zeros(n)
 	co2 = np.zeros(n)
@@ -109,13 +104,13 @@ def L1(output_path, st_agc_condition, thrsh, zm):
 	
 	st_storage = True        	# T/F: Use/Non-Use of storage fluxes
 
-	bad = 9999.9      # bad value
-	bad2 = -9999.9   # bad value
+	bad = 9999.9      	# bad value
+	bad2 = -9999.9   	# bad value
 	#Determined from option window
-	#zm = 20           # measurement height
-	rsdn_limit = 1.0  # Rdsn for night-daytime separation
-	#avgtime = 30      # averaging time (minutes)
-	num_day = 28         # date processing period as the # of days (28 -> 28 days)
+	#zm = 20           	# measurement height
+	rsdn_limit = 1.0 	# Rdsn for night-daytime separation
+	#avgtime = 30      	# averaging time (minutes)
+	num_day = 28        # date processing period as the # of days (28 -> 28 days)
 	#num_point_per_day = 48          # number of data points per day (48 -> 30 min avg time)
 	#num_point_per_day = 24          # number of data points per day (24 -> 1hour avg time)
 	

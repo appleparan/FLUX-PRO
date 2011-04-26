@@ -13,16 +13,22 @@
 #	 Oct/31/2010	 Jong su, Kim	 	Porting MATLAB program to Python
 #   
 
-import os, csv, copy, datetime
+import os
+import csv
+import copy
+import datetime
+import re
+from cStringIO import StringIO
 from numpy 	import 	zeros 	as npzeros, \
 					array 	as nparray, \
 					mean 	as npmean, \
-					median	as npmedian
+					median	as npmedian, \
+					nansum	as npnansum
 from scipy.optimize import fmin as spfmin
-from math import *
+from math import exp, isnan, fabs, sqrt
 import FLUXPRO_Common  as Common
-from cStringIO import StringIO
-import re
+
+
 
 def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 
@@ -39,9 +45,7 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 		input_fp_L1 = open(input_path_L1, 'r')
 	except IOError:
 		print "IO error;Check the input File: ", input_path_L1
-	except Error:
-		print "Unexpected Open Error: ", input_path_L1
-		input_fp_L1.close()
+	
 	
 	#output file path
 	output_file_path = os.path.join(output_path, 'ResultL2.csv')
@@ -51,7 +55,7 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 		print "IO error;Check the output File: ", output_file_path
 		return 'L2 failed'
 
-	#output_plot_1Àº Reynold-Taylor Equation¿¡¼­
+	#output_plot_1ï¿½ï¿½ Reynold-Taylor Equationï¿½ï¿½ï¿½ï¿½
 	
 	output_plot_2_file_path = os.path.join(output_path, 'Plot_L2_2.csv')
 	try:
@@ -93,7 +97,6 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 		return 'L2 failed'
 
 	#initialize
-	date = []
 	rsdn = npzeros(n_Compensate)
 	Ta = npzeros(n_Compensate)
 	h2o = npzeros(n_Compensate)
@@ -151,10 +154,6 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 	# Define constants and parameters for gap filling
 	#--------------------------------------------------------------------------
 	num_day = 28
-	ni = 36
-	nd = 10
-	n1 = 2         	# how many the largest points are considered for respiration
-					# DO NOT Modify!
 	#num_point_per_day = 24          # number of data points per day (48 -> 30 min avg time)
 	#avgtime = 30
 	#determine num_point_per_day automatically . using datetime module
@@ -174,37 +173,38 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 	
 	ni = int(num_point_per_day * 3 / 4) # the data point that night starts
 	nd = 300 / avgtime 					# how many the largest points are considered for respiration (300 : minitues of 5 hours)
+	n1 = 2
 	
 	#--------------------------------------------------------------------------
 	#E0_const = True # Do you want to use constant E0 for one year? Y/N
 
 	
 	beta0 = nparray([2, 200])
-	Tref = 10.0
-	T0 = -46.02
-	gap_limit = 0.025
-	ustar_limit = 0.5
-	upper_Fc = 0.35   # upper limit of nighttime CO2 flux (mg/m2/s)
-	Fc_limit = 0.005
+#	Tref = 10.0
+#	T0 = -46.02
+#	gap_limit = 0.025
+#	ustar_limit = 0.5
+#	upper_Fc = 0.35   # upper limit of nighttime CO2 flux (mg/m2/s)
+#	Fc_limit = 0.005
 	
 	## Information for MLT
 	drsdn = 50.0   # W/m2
 	dta = 2.5      # oC
 	dvpd = 5.0     # 5 hPa
-	rv = 461.51
+#	rv = 461.51
 	#--------------------------------------------------------------------------
 	
-	upper_co2 = 1000.0 # upper limit of CO2 concent.(mg/m3)
-	upper_h2o = 60.0  # upper limit of H2O concent. (g/m3)
-	upper_Ta = 60.0   # upper limit of air temperature (oC)
-	lower_Fc = -3.0   # lower limit of daytime CO2 flux (mg/m2/s)
-	lower_LE = -200    # lower limit of LE (W/m2)
-	lower_H = -300     # lower limit of H (W/m2)
+#	upper_co2 = 1000.0 # upper limit of CO2 concent.(mg/m3)
+#	upper_h2o = 60.0  # upper limit of H2O concent. (g/m3)
+#	upper_Ta = 60.0   # upper limit of air temperature (oC)
+#	lower_Fc = -3.0   # lower limit of daytime CO2 flux (mg/m2/s)
+#	lower_LE = -200    # lower limit of LE (W/m2)
+#	lower_H = -300     # lower limit of H (W/m2)
 	upper_Fc = 3   # upper limit of nighttime CO2 flux (mg/m2/s)
-	upper_LE = 800    # upper limit of LE (W/m2)
-	upper_H = 800     # upper limit of H (W/m2)
-	upper_agc = 95.0  # upper limit of AGC value
-	ustar_limit = 0.03 # minimum ustar for filtering out nighttime fluxes
+#	upper_LE = 800    # upper limit of LE (W/m2)
+#	upper_H = 800     # upper limit of H (W/m2)
+#	upper_agc = 95.0  # upper limit of AGC value
+#	ustar_limit = 0.03 # minimum ustar for filtering out nighttime fluxes
 	Fc_limit = 0.005  # lower limit of Re (ecosystem respiration) (mg/m2/s)
 	gap_limit = 0.025 # 0.025 --> 95# confidence interval
 
@@ -242,7 +242,6 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 	#print 'dta', dta
 	#print 'dvpd', dvpd
 	#print '-------------------------------------------------------------------'
-	index = []
 
 	for main_j in range(num_avg):       # loop for gap-filling of CO2 fluxes           
 		
@@ -366,9 +365,9 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 
 		ks = 0
 		
-	d = npzeros((n_L1, 5))
-	d2 = npzeros((n_L1, 5))
-	dd = npzeros((n_L1, 5))
+#	d = npzeros((n_L1, 5))
+#	d2 = npzeros((n_L1, 5))
+#	dd = npzeros((n_L1, 5))
 	x4 = []
 	#Regression to Lloyd-Taylor equation
 	print 'Regression to Lloyd-Taylor equation'
@@ -412,7 +411,7 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 		PV = copy.deepcopy(nparray(x3))
 	
 		
-		betafit = spfmin(Common.Reco, beta0, args = (TC, PV), disp=False)
+		betafit = spfmin(Common.reco_without_E0, beta0, args = (TC, PV), disp=False)
 		A = betafit[0]
 		B = betafit[1]
 		yfit = npzeros(len(TC))
@@ -531,7 +530,7 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 			PV = copy.deepcopy(nparray(x3))
 			
 			if(E0_const == True):
-				betafit = spfmin(Common.Reco2, beta0, args = (TC, PV, E0l), disp=False)
+				betafit = spfmin(Common.reco_const_E0, beta0, args = (TC, PV, E0l), disp=False)
 				A = betafit[0]
 				Rref.append(A)
 				
@@ -546,7 +545,7 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 				
 				jj = jj + 1
 			else:
-				betafit=spfmin(Common.Reco2, beta0, args = (TC, PV, E0))
+				betafit=spfmin(Common.reco_array_E0, beta0, args = (TC, PV, E0))
 				
 				A=betafit[0]
 				B=betafit[1]
@@ -690,14 +689,12 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 				stdev_E0.append(stdev_E0[jj])
 				
 			jj = jj + 1
-            
 			
 		else:
-
 			TC = nparray(x2)
 			PV = nparray(x3)
 			
-			betafit = spfmin(Common.Reco2, beta0, args = (TC, PV, E0s), disp=False)
+			betafit = spfmin(Common.reco_const_E0, beta0, args = (TC, PV, E0s), disp=False)
 			
 			A=betafit[0]
 			Rref.append(A)
@@ -709,7 +706,7 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 			sz = nparray(REs).shape
 			upper = abs(Common.tq(gap_limit, sz[0]-1))
 			RE_limit.append(upper*Common.stdn1(REs)/sqrt(sz[0]))
-            
+
 			jj = jj + 1
 	
 		x2 = []
@@ -778,7 +775,6 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 	#--------------------------------------------------------------------------
 	x2 = []
 	x3 = []
-	index = []
 	LE_filled = copy.deepcopy(LEsc)
 	for main_j in range(num_avg):       # loop for gap-filling of H2O fluxes           
 		
@@ -910,7 +906,6 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 	#--------------------------------------------------------------------------
 	x2 = []
 	x3 = []
-	index = []
 	H_filled = copy.deepcopy(Hsc)
 
 	for main_j in range(num_avg):       # loop for gap-filling of H2O fluxes           
@@ -949,7 +944,6 @@ def L2(input_path_L1, input_path_Compensate, output_path, E0_const):
 						(fabs(rsdn_f-rsdn[j])  	< drsdn)  and \
 						(fabs(ta_f-Ta[j])      	< dta) and \
 						(isnan(Hsc[j])        	== False)):
-							                   
 							x3_temp = []
 							x2.append(Hsc[j])
 							x3_temp.append(j)

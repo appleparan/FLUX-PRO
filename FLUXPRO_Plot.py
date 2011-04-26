@@ -18,7 +18,7 @@ def Plot_L1(output_path):
 		return 'L0 failed'    
 	except StandardError:
 		print "Unexpected Open Error: ", L0_input_path
-		input_fp.close()
+		L0_input_fp.close()
 		return 'PlotL0 failed'    
 
 	try:
@@ -38,7 +38,7 @@ def Plot_L1(output_path):
 		return 'L1 failed'    
 	except StandardError:
 		print "Unexpected Open Error: ", L1_input_path
-		input_fp.close()
+		L1_input_fp.close()
 		return 'PlotL1 failed'    
 
 	try:
@@ -404,7 +404,7 @@ def Plot_L2(output_path):
 			return 'Plot_L2_1 failed'    
 		except StandardError:
 			print "Unexpected Open Error: ", Plot_L2_1_input_path
-			input_fp.close()
+			Plot_L2_1_input_fp.close()
 			return 'PlotPlot_L2_1 failed'    
 
 		Plot_L2_1_total = []	
@@ -486,7 +486,7 @@ def Plot_L2(output_path):
 		return 'Plot_L2_2 failed'    
 	except StandardError:
 		print "Unexpected Open Error: ", Plot_L2_2_input_path
-		input_fp.close()
+		Plot_L2_2_input_fp.close()
 		return 'PlotPlot_L2_2 failed'    
 
 	try:

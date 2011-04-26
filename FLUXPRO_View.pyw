@@ -3,12 +3,17 @@ import sys, os
 if hasattr(sys, 'setdefaultencoding'):
 	sys.setdefaultencoding(sys.getfilesystemencoding())
 import wx
-from threading import *
+import threading
 import subprocess
+
 import FLUXPRO_L0
+import FLUXPRO_L1
+import FLUXPRO_L2
 import FLUXPRO_Plot
 
 L0_Object = FLUXPRO_L0.L0()
+#L1_Object = FLUXPRO_L1.L1()
+#L2_Object = FLUXPRO_L2.L2()
 
 #Option Variable
 global_st_PFR_method = True
@@ -37,74 +42,88 @@ global_default_zm = 26.0
 global_default_thrsh = 4.5
 
 # Define notification event for thread completion
-EVT_RESULT_ID = wx.NewId()
+EVT_COMPUTE_ID = wx.NewId()
+EVT_PLOT_ID = wx.NewId()
 
-def EVT_RESULT(win, func):
+def evt_compute(win, func):
 	#Define Result Event
-	win.Connect(-1, -1, EVT_RESULT_ID, func)
+	win.Connect(-1, -1, EVT_COMPUTE_ID, func)
+
+def evt_plot(win, func):
+	#Define Result Event
+	win.Connect(-1, -1, EVT_PLOT_ID, func)
+
 	
-class ResultEvent(wx.PyEvent):
+class compute_event(wx.PyEvent):
 	#Simple event to carry arbitrary result data.
-	def __init__(self, data):
+	def __init__(self):
 		#Init Result Event.
 		wx.PyEvent.__init__(self)
-		self.SetEventType(EVT_RESULT_ID)
-		self.data = data
+		self.SetEventType(EVT_COMPUTE_ID)
+		# self.data = data
 
-class Compute_FLUXPRO(Thread):
+class plot_event(wx.PyEvent):
+	#Simple event to carry arbitrary result data.
+	def __init__(self):
+		#Init Result Event.
+		wx.PyEvent.__init__(self)
+		self.SetEventType(EVT_PLOT_ID)
+		# self.data = data
+
+class compute_FLUXPRO(threading.Thread):
 	#Reference Link : http://wiki.wxpython.org/LongRunningTasks
-	def __init__(self, notify_window):
-		Thread.__init__(self)
+	def __init__(self, notify_window, output_dir_path, button_run, *args):
+		threading.Thread.__init__(self)
 		self._notify_window = notify_window
 		self._want_abort = False
-	
-	#do real computation
-	#def run_FLUX(self, 	input_cr5000_path, 	input_cr23x_path, input_L2_1_path, input_L2_2_path, output_dir_path, button_run):	
-	def run_FLUX(self, output_dir_path, button_run, *args):	
-
-		global global_st_L0
-		global global_st_L1
-		global global_st_L2
-		
-		#self.input_cr5000_path = input_cr5000_path
-		#self.input_cr23x_path 	= input_cr23x_path
-		#self.input_L2_1_path	= input_L2_1_path
-		#self.input_L2_2_path	= input_L2_2_path
-		
 		self.output_dir_path 	= output_dir_path
 		self.button_run			= button_run
-		print 'Start Process.'
-		
 		if(global_st_L0 == True and global_st_L1 == False and global_st_L2 == False):
 			self.Path_1st 			= args[0]
 			self.Path_2nd			= args[1]	
-			self.input_L0_cr5000_path 	= self.Path_1st
-			self.input_L0_cr23x_path 	= self.Path_2nd
-			result = L0_Object.main_func(self.input_L0_cr5000_path, self.input_L0_cr23x_path, self.output_dir_path)
+			self.input_L0_eddy_path 	= self.Path_1st
+			self.input_L0_met_path 	= self.Path_2nd
+
+		elif(global_st_L0 == False and global_st_L1 == False and global_st_L2 == True):
+			self.Path_1st 			= args[0]
+			self.Path_2nd			= args[1]	
+			self.input_L2_1_path	= self.Path_1st
+			self.input_L2_2_path	= self.Path_2nd
+			
+		
+	#do real computation
+	#def run_FLUX(self, 	input_cr5000_path, 	input_cr23x_path, input_L2_1_path, input_L2_2_path, output_dir_path, button_run):	
+	def run(self):
+		global global_st_L0
+		global global_st_L1
+		global global_st_L2
+
+		print 'Start Process.'
+		
+		self.button_run.Disable()
+		if(global_st_L0 == True and global_st_L1 == False and global_st_L2 == False):
+			#self.Path_1st 			= args[0]
+			#self.Path_2nd			= args[1]	
+			#self.input_L0_cr5000_path 	= self.Path_1st
+			#self.input_L0_cr23x_path 	= self.Path_2nd
+			result = L0_Object.L0_main(self.input_L0_eddy_path, self.input_L0_met_path, self.output_dir_path)
 			if self._want_abort:
-				# Use a result of None to acknowledge the abort (of
-				# course you can use whatever you'd like or even
-				# a separate event type)
-				wx.PostEvent(self._notify_window, ResultEvent(None))
+				#wx.PostEvent(self._notify_window, compute_event())
 				return
 			print result
 			if(result == 'L0 failed'):
 				self.button_run.Enable()
 				return result
+			
 				
 		elif(global_st_L0 == False and global_st_L1 == True and global_st_L2 == False):
-			import FLUXPRO_L1
-			
 			global global_st_agc
 			global global_thrsh
 			global global_zm
 			
 			result = FLUXPRO_L1.L1(self.output_dir_path, st_agc_condition = global_st_agc, thrsh = global_thrsh, zm = global_zm)
 			if self._want_abort:
-				# Use a result of None to acknowledge the abort (of
-				# course you can use whatever you'd like or even
-				# a separate event type)
-				wx.PostEvent(self._notify_window, ResultEvent(None))
+				#wx.PostEvent(self._notify_window, compute_event())
 				return
 			print result
 			if(result == 'L1 failed'):
@@ -112,27 +131,24 @@ class Compute_FLUXPRO(Thread):
 				return result
 			
 		elif(global_st_L0 == False and global_st_L1 == False and global_st_L2 == True):
-			self.Path_1st 			= args[0]
-			self.Path_2nd			= args[1]	
-			self.input_L2_1_path	= self.Path_1st
-			self.input_L2_2_path	= self.Path_2nd
-			import FLUXPRO_L2
+			#self.Path_1st 			= args[0]
+			#self.Path_2nd			= args[1]	
+			#self.input_L2_1_path	= self.Path_1st
+			#self.input_L2_2_path	= self.Path_2nd
+			
 			global global_st_E0_const
 			self.E0_const = global_st_E0_const
 			result = FLUXPRO_L2.L2(self.input_L2_1_path, self.input_L2_2_path, self.output_dir_path, self.E0_const)
 			if self._want_abort:
-				# Use a result of None to acknowledge the abort (of
-				# course you can use whatever you'd like or even
-				# a separate event type)
-				wx.PostEvent(self._notify_window, ResultEvent(None))
+				#wx.PostEvent(self._notify_window, compute_event())
 				return
 			print result
 			if(result == 'L2 failed'):
 				self.button_run.Enable()
 				return result
-
+		
 		print 'End Process'	
-		wx.PostEvent(self._notify_window, ResultEvent(result))
+		#wx.PostEvent(self._notify_window, compute_event())
 		self.button_run.Enable()
 		return result
 		
@@ -141,48 +157,42 @@ class Compute_FLUXPRO(Thread):
 		# Method for use by main thread to signal an abort
 		self._want_abort = True
 		
-class Plot_FLUXPRO(Thread):
+class plot_FLUXPRO(threading.Thread):
 	#Reference Link : http://wiki.wxpython.org/LongRunningTasks
-	def __init__(self, notify_window):
-		Thread.__init__(self)
+	def __init__(self, notify_window, output_dir_path, button_plot):
+		threading.Thread.__init__(self)
 		self._notify_window = notify_window
 		self._want_abort = False
+		self.output_dir_path = output_dir_path
+		self.button_plot = button_plot
+		#self.start()
 	
-	def plot_FLUX(self, output_dir_path, button_plot):	
+	def run(self):	
 
 		global global_st_L0
 		global global_st_L1
 		global global_st_L2
 		
-		self.output_dir_path 	= output_dir_path
-		self.button_plot		= button_plot
 		print 'Start Process.'
 		
 		if(global_st_L0 == False and global_st_L1 == True and global_st_L2 == False):
-			
 			result = FLUXPRO_Plot.Plot_L1(self.output_dir_path)
+			#wx.GetApp().Yield()
 			if self._want_abort:
-				# Use a result of None to acknowledge the abort (of
-				# course you can use whatever you'd like or even
-				# a separate event type)
-				wx.PostEvent(self._notify_window, ResultEvent(None))
+				wx.PostEvent(self._notify_window, plot_event())
 				return
 			print result
 
 		elif(global_st_L0 == False and global_st_L1 == False and global_st_L2 == True):
 			result = FLUXPRO_Plot.Plot_L2(self.output_dir_path)
+			#wx.GetApp().Yield()
 			if self._want_abort:
-				# Use a result of None to acknowledge the abort (of
-				# course you can use whatever you'd like or even
-				# a separate event type)
-				wx.PostEvent(self._notify_window, ResultEvent(None))
+				#wx.PostEvent(self._notify_window, plot_event())
 				return
 			print result
-			
 		
 		print 'End Plot'	
-		wx.PostEvent(self._notify_window, ResultEvent(result))
-
+		#wx.PostEvent(self._notify_window, plot_event())
 		self.button_plot.Enable()
 		
 	def abort(self):
@@ -285,11 +295,16 @@ class Input_panel(wx.Panel):
 		self.SetSizer(self.left_sizer)
 
 		#Ready for computation
-		self.Computation_obj = Compute_FLUXPRO(self)
+		#self.Computation_obj = compute_FLUXPRO(self)
+		
+		# Set up event handler for any worker thread results
+		evt_compute(self, self.OnRun)
+		evt_plot(self, self.OnRun)
+		
 		#And indicate we don't have a worker thread yet
 		self.worker_compute = None
 		self.worker_plot = None
-
+		
 	def OnRun(self, event):
 		self.button_run.Disable()
 		
@@ -320,33 +335,44 @@ class Input_panel(wx.Panel):
 			global_st_L2 = True
 		
 
-		if not self.worker_compute:
-			self.worker_compute = Compute_FLUXPRO(self)
+		if self.worker_compute:
+			self.worker_compute = None
 
 		if(global_st_L0 == True and global_st_L1 == False and global_st_L2 == False):	
 			self.input_cr5000_path = self.nb_obj.tabL0.filebrowse_textctrl_input_cr5000.GetValue()
 			self.input_cr23x_path = self.nb_obj.tabL0.filebrowse_textctrl_input_cr23x.GetValue()
 			if((self.input_cr5000_path != '') and (self.input_cr23x_path != '')):
-				result_compute = self.worker_compute.run_FLUX(self.output_dir_path, self.button_run, self.input_cr5000_path, self.input_cr23x_path)
+				self.worker_compute = compute_FLUXPRO(self, self.output_dir_path, self.button_run, self.input_cr5000_path, self.input_cr23x_path)
+				self.worker_compute.start()
+				#result_compute = self.worker_compute.compute(self.output_dir_path, self.button_run, self.input_cr5000_path, self.input_cr23x_path)
+				#th = threading.Thread(target=self.worker_compute.compute, args=(self.output_dir_path, self.button_run, self.input_cr5000_path, self.input_cr23x_path,))
+				#th.start()
 			else:
 				print 'Failed;Check input path'
 				return
 				
 		elif(global_st_L0 == False and global_st_L1 == True and global_st_L2 == False):	
-			result_compute = self.worker_compute.run_FLUX(self.output_dir_path, self.button_run)
+			self.worker_compute = compute_FLUXPRO(self, self.output_dir_path, self.button_run)
+			self.worker_compute.start()
+			#result_compute = self.worker_compute.compute(self.output_dir_path, self.button_run)
+			#th = threading.Thread(target=self.worker_compute.compute, args=(self.output_dir_path, self.button_run,))
+			#th.start()
 				
 		elif(global_st_L0 == False and global_st_L1 == False and global_st_L2 == True):	
 			self.input_L2_1_path = self.nb_obj.tabL2.filebrowse_textctrl_input_L2_1.GetValue()
 			self.input_L2_2_path = self.nb_obj.tabL2.filebrowse_textctrl_input_L2_2.GetValue()
 			
 			if((self.input_L2_1_path != '') and (self.input_L2_2_path != '')):
-				result_compute = self.worker_compute.run_FLUX(self.output_dir_path, self.button_run, self.input_L2_1_path, self.input_L2_2_path)
-				
+				self.worker_compute = compute_FLUXPRO(self, self.output_dir_path, self.button_run, self.input_L2_1_path, self.input_L2_2_path)
+				self.worker_compute.start()
+				#result_compute = self.worker_compute.compute(self.output_dir_path, self.button_run, self.input_L2_1_path, self.input_L2_2_path)
+				#th = threading.Thread(target=self.worker_compute.compute, args=(self.output_dir_path, self.button_run, self.input_L2_1_path, self.input_L2_2_path,))
+				#th.start()				
 			else:
 				print 'Failed;Check input path'
 				return
 		
-		
+		self.worker_compute = None
 		self.button_run.Enable()
 	
 	def OnCancel(self, event):
@@ -358,7 +384,8 @@ class Input_panel(wx.Panel):
 			
 		if self.worker_compute:
 			self.worker_compute.abort()
-	
+			
+		self.worker_compute = None
 		self.button_run.Enable()
 		print 'Process stopped.'
 
@@ -400,19 +427,19 @@ class Input_panel(wx.Panel):
 			global_st_L0 = False
 			global_st_L1 = False
 			global_st_L2 = True
-			
-
-		if not self.worker_plot:
-			self.worker_plot = Plot_FLUXPRO(self)
 		
-		if((self.output_dir_path != '')):
-			result_compute = self.worker_plot.plot_FLUX(self.output_dir_path, self.button_run)
+		if self.worker_compute:
+			self.worker_compute = None
+			
+		if((self.output_dir_path != '') and self.worker_plot == None):
+			self.worker_plot = Plot_FLUXPRO(self, self.output_dir_path, self.button_run)
+			#result_compute = self.worker_plot.plot(self.output_dir_path, self.button_run)
 		else:
 			print 'Failed;Check input path'
 			return
 		
 		self.button_plot.Enable()
-	
+		
 	def OpenDirDlg_OUTPUT(self, event):
 		dlg = wx.DirDialog(self, "Choose a Directory", style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
 		if dlg.ShowModal() == wx.ID_OK:
